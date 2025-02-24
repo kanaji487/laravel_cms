@@ -8,18 +8,32 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function Dashboard() {
     const user = usePage().props.auth.user;
+    const getAvatar = (name : string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=200`;
+
     return (
         <SidebarProvider>
+            <Head title="Dashboard" />
             <Sidebar>
                 <SidebarHeader>
-                    <p>Hi</p>
+                    <SidebarMenuItem className='list-none'>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger>
+                                <SidebarMenuButton>
+                                    <h1>Company</h1>
+                                </SidebarMenuButton>
+                            </DropdownMenuTrigger>
+                        </DropdownMenu>
+                    </SidebarMenuItem>
                 </SidebarHeader>
                 <SidebarContent>
-                    <SidebarMenuItem>
+                    <SidebarMenuItem className='list-none'>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <SidebarMenuButton>
-                                    <p>Article</p>
+                                <SidebarMenuButton className='flex justify-between'>
+                                    <h1>Article</h1>
+                                    <button type='button'>
+                                        <i className="bi bi-plus-square-fill"></i>
+                                    </button>
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
                         </DropdownMenu>
@@ -30,9 +44,19 @@ export default function Dashboard() {
                         <SidebarMenuItem>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <SidebarMenuButton className='bg-black text-white hover:bg-red-300'>
-                                        {user.email}
-                                        <i className="bi bi-chevron-up"></i>
+                                    <SidebarMenuButton className="flex items-center w-full h-12 px-6 py-2 rounded-lg transition">
+                                        <div className="flex items-center gap-4">
+                                            <img
+                                                src={getAvatar(user?.name || "Guest User")}
+                                                alt="User Avatar"
+                                                className="h-10 rounded-lg"
+                                            />
+                                            <div className="flex flex-col">
+                                                <span className="text-sm">{user.email}</span>
+                                                <span className="text-sm">{user.name}</span>
+                                            </div>
+                                            <i className="bi bi-chevron-up text-lg"></i>
+                                        </div>
                                     </SidebarMenuButton>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent
